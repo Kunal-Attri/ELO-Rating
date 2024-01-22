@@ -4,4 +4,4 @@ In this repo, I created a library which can be re-used to directly implement ELO
 
 ## Formula to calculate New Rating of a Player
 
-$R^{'}_{a} = R_{a} + K * (S_{a} - E_{a})$
+$R^'_a = R_a + K * (S_a - E_a)$
