@@ -62,6 +62,7 @@ E_a = \frac{Q_a}{Q_a + Q_b}
 $$
 
 On solving  by substituting values of $Q_a$ and $Q_b$,
+
 $$
 E_a = \frac{1}{1 + 10 ^ {\frac{R_b - R_a}{c}}} \text{, where } c = 400
 $$
