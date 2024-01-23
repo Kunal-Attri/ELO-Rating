@@ -9,6 +9,7 @@ It is an excellent method for calculating relative skill levels of players repre
 - ELO ratings of individual players reflect their relative skill levels based on performance in past matches.
 - Now, a player defeating a much weaker player is not the same as defeating a much more stronger player. ELO rating takes this into account and is reflected in updated ratings of both players.
 - After each match, ELO rating of both players is updated based on a formula.
+- Originally, it only considers the outcome of a match.
 
 ## Formula to calculate New Rating of a Player
 
@@ -66,7 +67,10 @@ $\therefore E_a \in [0, 1]$
 
 - As $0 \leq S_a \leq 1$ and $0 \leq E_a \leq 1$, maximum change in a player's rating can be $K$.
 
-## Initial ELO Rating
+### Initial ELO Rating
 
 - It is the rating that a new player has when he starts playing the game.
 - It must be significantly larger than $K$ factor, to allow a player to play, and lose enough matches before eventually winning matches, so that his ELO rating would finally start rising up.
+- Generally, can be 1000.
+
+## Considering Points
