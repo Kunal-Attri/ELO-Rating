@@ -58,7 +58,7 @@ $$E_a = \frac{Q_a}{Q_a + Q_b}
     Q_b = 10 ^ {R_b / c} \\
     c = 400 \text{ (generally)}
 \end{cases}$$
-<br>
+
 On solving  by substituting values of $Q_a$ and $Q_b$,
 $$
 E_a = \frac{1}{1 + 10 ^ {\frac{R_b - R_a}{c}}}
