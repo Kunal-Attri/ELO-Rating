@@ -133,3 +133,4 @@ $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
 
 - $L$ can be set to 16, and can be varied as well.
 - This method is less intuitive, but gives much more control and predictability of the ratings.
+- Using this, maximal change that a rating can have is $K + L$.
