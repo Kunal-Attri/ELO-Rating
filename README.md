@@ -51,15 +51,14 @@ $E_a: \text{Expected score or outcome of the match}$
 - It is calculated based on ELO ratings of two players.
 - Formula:
 
-$$
-E_a = \frac{Q_a}{Q_a + Q_b}
+$$E_a = \frac{Q_a}{Q_a + Q_b}
 \text{, where}
 \begin{cases}
     Q_a = 10 ^ {R_a / c} \\
     Q_b = 10 ^ {R_b / c} \\
     c = 400 \text{ (generally)}
-\end{cases}
-$$
+\end{cases}$$
+<br>
 On solving  by substituting values of $Q_a$ and $Q_b$,
 $$
 E_a = \frac{1}{1 + 10 ^ {\frac{R_b - R_a}{c}}}
