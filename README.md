@@ -33,15 +33,15 @@ $E_a: \text{Expected score or outcome of the match}$
 
 - It determines how much influence each match can have on the ELO ratings of the players.
 - It can be varied according to matches, leagues, competitions, player rating levels, etc.
-- Generally, can be set to 32.
+- Generally, can be set to $32$.
 
 ### Actual score: $S_a$
 
 - Represents whether a player won or lost or drawn the match.
 - Generally, it takes one of the three values:
-  - 1 for a win
-  - 0 for a loss
-  - 0.5 for a draw
+  - $1$ for a win
+  - $0$ for a loss
+  - $0.5$ for a draw
   - i.e. $S_{a} \in [0, 1]$
 
 ### Expected score: $E_a$
