@@ -123,12 +123,14 @@ $L: \text{Second scaling factor}$
 <br>
 
 $$
-p = 
+p =
 \begin{cases}
   1 & \quad \text{if } S_a - E_a \gt 0 \\
   -1 & \quad \text{if } S_a - E_a \lt 0 \\
   0 & \quad \text{otherwise}
 \end{cases}$$
 
-
 $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
+
+- $L$ can be set to 16, and can be varied as well.
+- This method is less intuitive, but gives much more control and predictability of the ratings.
