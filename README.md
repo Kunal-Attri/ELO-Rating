@@ -109,7 +109,7 @@ $P_b: \text{Points scored by player B}$
 
 ### Method 2
 
-- In this, we keep $S_a$ same as outcome of match, i.e., $S_a \in \left\{ 0, 0.5, 1 \right\} $.
+- In this, we keep $S_a$ same as outcome of match, i.e., $S_a \in \text{\{0, 0.5, 1\}}$.
 - And we extend rating update formula with another scaling factor to which acts as a bonus for the amount of scored points.
 - New Formula:
 
