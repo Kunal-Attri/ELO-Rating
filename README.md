@@ -64,9 +64,8 @@ $$
 On solving  by substituting values of $Q_a$ and $Q_b$,
 
 $$
-E_a = \frac{1}{1 + 10 ^ {\frac{R_b - R_a}{c}}}
-\text{, where } c = 400
-$$
+E_a = \frac{1}{1 + 10 ^ {\frac{R_b - R_a}{c}}} \text{, where } c = 400$$
+
 $\therefore E_a \in [0, 1]$
 
 
