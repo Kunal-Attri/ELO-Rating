@@ -77,4 +77,24 @@ $\therefore E_a \in [0, 1]$
 - It must be significantly larger than $K$ factor, to allow a player to play, and lose enough matches before eventually winning matches, so that his ELO rating would finally start rising up.
 - Generally, can be set to $1000$.
 
-## Considering Points
+## Considering Points scored by players
+
+### But, why?
+
+- Consider a game, where the only thing which matters is not just the outcome of game, i.e. win or loss.
+- Let's say:
+  - In 1st game, player A won over player B by 5-1 score.
+  - In second game player C won over player B by 2-1 score.
+- In this scenario, player A had a much more dominant win than player C.
+- Thus, player A much have a better rating inrease than player C.
+
+### Method 1:
+
+- We replace $S_a$ with the fraction of points scored by player A divided by total score.
+- i.e.,
+
+$$
+S_a = \frac{P_a}{P_a + P_b} \text{, and}\\
+{}\\
+S_b = \frac{P_b}{P_a + P_b}
+$$
