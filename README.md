@@ -94,7 +94,6 @@ $\therefore E_a \in [0, 1]$
 - i.e.,
 
 $$
-S_a = \frac{P_a}{P_a + P_b} \text{, and}\\
-{}\\
+S_a = \frac{P_a}{P_a + P_b} \text{ and }
 S_b = \frac{P_b}{P_a + P_b}
 $$
