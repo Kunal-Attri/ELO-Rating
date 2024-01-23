@@ -18,20 +18,25 @@ R^{'}_a = R_a + K \times (S_a - E_a)
 $$
 
 where,
-$\\
+<br>
+$
 R^{'}_a: \text{New Rating of player A}
 $
-$\\
+<br>
+$
 R_a: \text{Original Rating of player A}
 $
-$\\
+<br>
+$
 K\ : \text{Scaling factor}
 $
-$\\
+<br>
+$
 S_a: \text{Actual score or outcome of the match}
 $
-$\\
-E_a: \text{Expected score or outcome of the match}\\
+<br>
+$
+E_a: \text{Expected score or outcome of the match}
 $
 
 ### Scaling Factor: $K$
