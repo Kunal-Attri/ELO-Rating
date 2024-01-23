@@ -121,10 +121,13 @@ where,
 <br>
 $L: \text{Second scaling factor}$
 <br>
-$p = 
+
+$$
+p = 
 \begin{cases}
   1 & \quad \text{if } S_a - E_a \gt 0 \\
   -1 & \quad \text{if } S_a - E_a \lt 0
-\end{cases}$
-<br>
+\end{cases}$$
+
+
 $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
