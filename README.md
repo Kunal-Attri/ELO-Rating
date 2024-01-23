@@ -5,7 +5,7 @@ It is an excellent method for calculating relative skill levels of players repre
 ## Understanding ELO
 
 - Consider a PvP match b/w two players, player A and player B.
-- Player A has ELO rating R<sub>a</sub> and player B has ELO rating R<sub>b</sub>.
+- Player A has ELO rating $R_a$ and player B has ELO rating $R_b$.
 - ELO ratings of individual players reflect their relative skill levels based on performance in past matches.
 - Now, a player defeating a much weaker player is not the same as defeating a much more stronger player. ELO rating takes this into account and is reflected in updated ratings of both players.
 - After each match, ELO rating of both players is updated based on a formula.
