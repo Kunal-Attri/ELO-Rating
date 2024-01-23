@@ -88,7 +88,7 @@ $\therefore E_a \in [0, 1]$
 - In this scenario, player A had a much more dominant win than player C.
 - Thus, player A much have a better rating inrease than player C.
 
-### Method 1:
+### Method 1
 
 - We replace $S_a$ with the fraction of points scored by player A divided by total score.
 - i.e.,
@@ -96,4 +96,23 @@ $\therefore E_a \in [0, 1]$
 $$
 S_a = \frac{P_a}{P_a + P_b} \text{ and }
 S_b = \frac{P_b}{P_a + P_b}
+$$
+
+where,
+<br>
+$P_a: \text{Points scored by player A}$
+<br>
+$P_b: \text{Points scored by player B}$
+
+- This is more intuitive and we don't need to update the main rating change formula.
+- But, it gives less control and predictability on the rating change.
+
+### Method 2
+
+- In this, we keepp $S_a$ same as outcomee of match, i.e., $S_a \in \{0, 0.5, 1\}$.
+- And we extend rating update formula with another scaling factor to which acts as a bonus for the amount of scored points.
+- New Formula:
+
+$$
+R^{'}_a = R_a + K \times (S_a - E_a) + L \times \left( \frac{P_a}{P_a + P_b} \right)
 $$
