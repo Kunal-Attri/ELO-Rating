@@ -74,6 +74,6 @@ $\therefore E_a \in [0, 1]$
 
 - It is the rating that a new player has when he starts playing the game.
 - It must be significantly larger than $K$ factor, to allow a player to play, and lose enough matches before eventually winning matches, so that his ELO rating would finally start rising up.
-- Generally, can be 1000.
+- Generally, can be set to $1000$.
 
 ## Considering Points
