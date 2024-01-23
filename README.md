@@ -114,5 +114,17 @@ $P_b: \text{Points scored by player B}$
 - New Formula:
 
 $$
-R^{'}_a = R_a + K \times (S_a - E_a) + L \times \left( \frac{P_a}{P_a + P_b} \right)
+R^{'}_a = R_a + K \times (S_a - E_a) + p \times L \times \left( \frac{P_a}{P_a + P_b} \right)
 $$
+
+where,
+<br>
+$L: \text{Second scaling factor}$
+<br>
+$p = 
+\begin{cases}
+  1 & \quad \text{if } S_a - E_a \gt 0 \\
+  -1 & \quad \text{if } S_a - E_a \lt 0
+\end{cases}$
+<br>
+$$p = \frac{S_a - E_a}{|S_a - E_a|}$$
