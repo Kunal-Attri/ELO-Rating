@@ -154,9 +154,27 @@ class ELO:
         new_ratings = self.elo(rating_a, rating_b, score_a, score_b)
         new_rating_a, new_rating_b = new_ratings
 
+        # Get expected scores
+        expected_scores = self.__get_expected_scores(rating_a, rating_b)
+        expected_a, expected_b = expected_scores
+
+        # Calculating p value
+        p_a = self.__p(score_a, expected_a)
+        p_b = self.__p(score_b, expected_b)
+
         # Adding L factor calculation for extra points
-        new_rating_a += self.__L_FACTOR * points_a / (points_a + points_b)
-        new_rating_b += self.__L_FACTOR * points_b / (points_a + points_b)
+        new_rating_a += p_a * self.__L_FACTOR * self.__points_fraction(points_a, points_b)
+        new_rating_b += p_b * self.__L_FACTOR * self.__points_fraction(points_b, points_a)
 
         new_ratings = (new_rating_a, new_rating_b)
         return new_ratings
+
+    def __p(self, score, expected):
+        if score == expected:
+            return 0
+        return (score - expected) / abs(score - expected)
+
+    def __points_fraction(self, points_a, points_b):
+        if points_a == points_b:
+            return 0
+        return points_a / (points_a + points_b)
