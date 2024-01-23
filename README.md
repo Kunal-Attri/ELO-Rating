@@ -19,9 +19,7 @@ $$
 
 where,
 <br>
-$
-R^{'}_a: \text{New Rating of player A}
-$
+$R^{'}_a: \text{New Rating of player A}$
 <br>
 $
 R_a: \text{Original Rating of player A}
