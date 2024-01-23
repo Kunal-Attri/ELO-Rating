@@ -19,10 +19,18 @@ $$
 
 where,
 $\\
-R^{'}_a: \text{New Rating of player A}\\
-R_a: \text{Original Rating of player A}\\
-K\ : \text{Scaling factor}\\
-S_a: \text{Actual score or outcome of the match}\\
+R^{'}_a: \text{New Rating of player A}
+$
+$\\
+R_a: \text{Original Rating of player A}
+$
+$\\
+K\ : \text{Scaling factor}
+$
+$\\
+S_a: \text{Actual score or outcome of the match}
+$
+$\\
 E_a: \text{Expected score or outcome of the match}\\
 $
 
