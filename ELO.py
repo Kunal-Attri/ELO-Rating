@@ -28,6 +28,11 @@ class ELO:
         :return: new ratings of the two players
         """
 
+        # Check if scores and valid
+        if not self.__valid_scores(score_a, score_b):
+            print("Scores not valid")
+            return rating_a, rating_b
+
         # Expected scores of the players
         expected_scores = self.__get_expected_scores(rating_a, rating_b)
         expected_score_a, expected_score_b = expected_scores
@@ -190,3 +195,6 @@ class ELO:
         if points_a == points_b:
             return 0
         return points_a / (points_a + points_b)
+
+    def __valid_scores(self, score_a, score_b):
+        return 0 <= score_a <= 1 and 0 <= score_b <= 1 and score_a + score_b <= 1.1
