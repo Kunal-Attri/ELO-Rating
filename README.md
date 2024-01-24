@@ -137,7 +137,7 @@ $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
 
 ## Implementation
 
-- I have implemented all of the above formulas in ELO class in Python.
+- I have implemented all of the above formulas in ELO class in Python and Java.
 
 ### Class ELO
 
@@ -180,7 +180,9 @@ $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
 ### Dependencies
 
 - Python: No extra libraries used.
+- Java: No extra libraries used.
 
 ## Files
 
 1. ELO.py: Python implementation of ELO class.
+2. ELO.java: Java implementation of ELO class.
