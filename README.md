@@ -134,3 +134,50 @@ $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
 - $L$ can be set to 16, and can be varied as well.
 - This method is less intuitive, but gives much more control and predictability of the ratings.
 - Using this, maximal change that a rating can have is $K + L$.
+
+## Implementation
+
+- I have implemented all of the above formulas in ELO class in Python.
+
+### Class ELO
+
+- It has a constructor and two public methods.
+  - constructor(): To create an instance of class ELO
+  - elo(): It can be called after a match with ratings of both players and match result. It returns the updated ratings of the players.
+  - elo_with_points(): It is similar to elo(), but this is with consideration of points scored by the two players.
+
+#### Constructor
+
+- It takes 3 arguments:
+  1. k_factor: Value of $K$ factor. (int, default $32$)
+  2. c_value: Value of $c$ number. (int, default $400$)
+  3. l_factor: Value of $L$ factor. (int, default $16$)
+- Constructor instantiates an object of ELO class with given parameters.
+- In practice, it can be called multiple times for different leagues, arenas, matches, championships, competitions, etc.
+
+#### elo() method
+
+- It takes 4 arguments:
+  1. rating_a: Current rating of player A. (float)
+  2. rating_b: Current rating of player B. (float)
+  3. score_a: Outcome for player A. (float)
+  4. score_b: Outcome for player B. (float)
+- score_a and score_b must $\in$ [0, 1]. 0.5 in case of a draw.
+- It returns the new ratings of the players in the form of tuple/array of float point numbers. e.g. (1400.0, 1550.0)
+- It must be called after a match with the required parameters to get the new ratings of the players.
+
+#### elo_with_points() method
+
+- It takes 4 arguments:
+  1. rating_a: Current rating of player A. (float)
+  2. rating_b: Current rating of player B. (float)
+  3. points_a: Points scored by player A. (float)
+  4. points_b: Points scored by player B. (float)
+  5. use_l_factor: Whether to use $L$ factor for consideration of points or replace $S_a$ with the fraction of points. (boolean, default true)
+- It returns the new ratings of the players in the form of tuple/array of float point numbers. e.g. (1400.0, 1550.0)
+- It must be called after a match with the required parameters to get the new ratings of the players.
+
+### Dependencies
+
+- Python: No extra libraries used.
+
