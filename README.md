@@ -181,3 +181,6 @@ $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
 
 - Python: No extra libraries used.
 
+## Files
+
+1. ELO.py: Python implementation of ELO class.
