@@ -170,11 +170,23 @@ class ELO:
         return new_ratings
 
     def __p(self, score, expected):
+        """
+        Returns 1 or 0 or -1
+        :param score: actual outcome of match
+        :param expected: expected outcome of match
+        :return: Either 1 or -1 or 0
+        """
         if score == expected:
             return 0
         return (score - expected) / abs(score - expected)
 
     def __points_fraction(self, points_a, points_b):
+        """
+        Returns the fraction of points scored by a player w.r.t. total points scored.
+        :param points_a: points scored by player A
+        :param points_b: points scored by player B
+        :return: fraction of points
+        """
         if points_a == points_b:
             return 0
         return points_a / (points_a + points_b)
