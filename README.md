@@ -168,7 +168,7 @@ $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
 
 #### elo_with_points() method
 
-- It takes 4 arguments:
+- It takes 5 arguments:
   1. rating_a: Current rating of player A. (float)
   2. rating_b: Current rating of player B. (float)
   3. points_a: Points scored by player A. (float)
