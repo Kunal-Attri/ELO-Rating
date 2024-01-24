@@ -41,8 +41,7 @@ class ELO:
         new_rating_a = self.__update(rating_a, score_a, expected_score_a)
         new_rating_b = self.__update(rating_b, score_b, expected_score_b)
 
-        new_ratings = (new_rating_a, new_rating_b)
-        return new_ratings
+        return new_rating_a, new_rating_b
 
     def __update(self,
                  rating: float,
@@ -197,4 +196,4 @@ class ELO:
         return points_a / (points_a + points_b)
 
     def __valid_scores(self, score_a, score_b):
-        return 0 <= score_a <= 1 and 0 <= score_b <= 1 and score_a + score_b <= 1.1
+        return 0 <= score_a <= 1 and 0 <= score_b <= 1 and score_a + score_b < 1.1
