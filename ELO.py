@@ -2,6 +2,9 @@ class ELO:
     """
     Class intended for ELO Rating use in multiple scenarios
     """
+    DRAW = 0
+    PLAYER_A_WON = 1
+    PLAYER_B_WON = 2
 
     def __init__(self, k_factor: int = 32, c_value: int = 400, l_factor: int = 16):
         """
@@ -15,6 +18,28 @@ class ELO:
         self.__L_FACTOR = l_factor
 
     def elo(self,
+            rating_a: float,
+            rating_b: float,
+            outcome: int) -> tuple[float, float]:
+        """
+        This function updates the rating of two players based on outcome of a PvP match
+        :param rating_a: current rating of player A
+        :param rating_b: current rating of player B
+        :param outcome: Outcome of a match. 0 - Draw, 1 - Player A won, 2 - Player B won
+        :return: new ratings of the two players
+        """
+        if outcome == ELO.DRAW:
+            return self.__elo_scores(rating_a, rating_b, 0.5, 0.5)
+        elif outcome == ELO.PLAYER_A_WON:
+            return self.__elo_scores(rating_a, rating_b, 1, 0)
+        elif outcome == ELO.PLAYER_B_WON:
+            return self.__elo_scores(rating_a, rating_b, 0, 1)
+        else:
+            # Invalid outcome is put
+            print("Invalid Outcome. Please refer documentation on GitHub.")
+            return rating_a, rating_b
+
+    def __elo_scores(self,
             rating_a: float,
             rating_b: float,
             score_a: float,
@@ -87,20 +112,34 @@ class ELO:
                         rating_b: float,
                         points_a: float,
                         points_b: float,
-                        use_l_factor: bool = True) -> tuple[float, float]:
+                        method: int = 2) -> tuple[float, float]:
         """
         Function to calculate new ratings of two players based on points scored by them in a PvP match
         :param rating_a: current rating of player A
         :param rating_b: current rating of player B
         :param points_a: points scored by player A
         :param points_b: points scored by player B
-        :param use_l_factor: Whether to rationalize points or use L factor
+        :param method: Method to use for consideration of player points
         :return: new ratings of the two players
         """
-        if not use_l_factor:
+        if method == 0:
+            return self.__elo_outcome_points(rating_a, rating_b, points_a, points_b)
+        elif method == 1:
             return self.__elo_rationalize_points(rating_a, rating_b, points_a, points_b)
-        else:
+        elif method == 2:
             return self.__elo_with_l_factor(rating_a, rating_b, points_a, points_b)
+        else:
+            # Invalid method chosen
+            print("Invalid method chosen")
+            return rating_a, rating_b
+
+    def __elo_outcome_points(self, 
+                             rating_a: float, 
+                             rating_b: float, 
+                             points_a: float, 
+                             points_b: float) -> tuple[float, float]:
+        scores = self.__get_scores(points_a, points_b)
+        return self.__elo_scores(points_a, points_b, scores[0], scores[1])
 
     def __elo_rationalize_points(self,
                                  rating_a: float,
@@ -122,10 +161,10 @@ class ELO:
             score_b = 0.5
         else:
             # Not zero points
-            score_a = points_a / (points_a + points_b)
-            score_b = points_b / (points_a + points_b)
+            score_a = self.__points_fraction(points_a, points_b)
+            score_b = self.__points_fraction(points_b, points_a)
 
-        return self.elo(rating_a, rating_b, score_a, score_b)
+        return self.__elo_scores(rating_a, rating_b, score_a, score_b)
 
     def __elo_with_l_factor(self,
                             rating_a: float,
@@ -141,26 +180,17 @@ class ELO:
         :param points_b: points scored by player B
         :return: new ratings of the two players
         """
-        if points_a == points_b:
-            # Draw match
-            score_a = 0.5
-            score_b = 0.5
-        elif points_a > points_b:
-            # Player A won
-            score_a = 1
-            score_b = 0
-        else:
-            #  Player B won
-            score_a = 0
-            score_b = 1
-
-        # Calculating new ratings based on outcome
-        new_ratings = self.elo(rating_a, rating_b, score_a, score_b)
-        new_rating_a, new_rating_b = new_ratings
+        # Get actual scores
+        scores = self.__get_scores(points_a, points_b)
+        score_a, score_b = scores
 
         # Get expected scores
         expected_scores = self.__get_expected_scores(rating_a, rating_b)
         expected_a, expected_b = expected_scores
+
+        # Calculating new ratings based on outcome
+        new_ratings = self.__elo_scores(rating_a, rating_b, score_a, score_b)
+        new_rating_a, new_rating_b = new_ratings
 
         # Calculating p value
         p_a = self.__p(score_a, expected_a)
@@ -170,8 +200,7 @@ class ELO:
         new_rating_a += p_a * self.__L_FACTOR * self.__points_fraction(points_a, points_b)
         new_rating_b += p_b * self.__L_FACTOR * self.__points_fraction(points_b, points_a)
 
-        new_ratings = (new_rating_a, new_rating_b)
-        return new_ratings
+        return new_rating_a, new_rating_b
 
     def __p(self, score, expected):
         """
@@ -192,7 +221,7 @@ class ELO:
         :return: fraction of points
         """
         if points_a == points_b:
-            return 0
+            return 0.5
         return points_a / (points_a + points_b)
 
     def __valid_scores(self, score_a, score_b):
@@ -202,3 +231,11 @@ class ELO:
         :return: True if the scores are valid and false otherwise
         """
         return 0 <= score_a <= 1 and 0 <= score_b <= 1 and score_a + score_b < 1.1
+
+    def __get_scores(self, points_a, points_b):
+        if points_a == points_b:
+            return 0.5, 0.5
+        elif points_a > points_b:
+            return 1, 0
+        else:
+            return 0, 1
