@@ -220,8 +220,8 @@ class ELO:
         :param points_b: points scored by player B
         :return: fraction of points
         """
-        if points_a == points_b:
-            return 0.5
+        if points_a == points_b and points_a == 0:
+            return 0
         return points_a / (points_a + points_b)
 
     def __valid_scores(self, score_a, score_b):
