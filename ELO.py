@@ -196,4 +196,9 @@ class ELO:
         return points_a / (points_a + points_b)
 
     def __valid_scores(self, score_a, score_b):
+        """
+        :param score_a: outcome for player A
+        :param score_b: outcome for player B
+        :return: True if the scores are valid and false otherwise
+        """
         return 0 <= score_a <= 1 and 0 <= score_b <= 1 and score_a + score_b < 1.1
