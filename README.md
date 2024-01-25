@@ -88,6 +88,12 @@ $\therefore E_a \in [0, 1]$
 - In this scenario, player A had a much more dominant win than player C.
 - Thus, player A much have a better rating inrease than player C.
 
+### Method 0
+
+- In this, we are considering the effect of points scored by individual players on the change in rating.
+- We only consider the fact whether the player has won or lost or drawn the match.
+- This is same as original ELO Rating.
+
 ### Method 1
 
 - We replace $S_a$ with the fraction of points scored by player A divided by total score.
@@ -157,23 +163,31 @@ $$p = \frac{S_a - E_a}{|S_a - E_a|}$$
 
 #### elo() method
 
+-  This is the rating update function which only considers the outcome of a match.
 - It takes 4 arguments:
   1. rating_a: Current rating of player A. (float)
   2. rating_b: Current rating of player B. (float)
-  3. score_a: Outcome for player A. (float)
-  4. score_b: Outcome for player B. (float)
-- score_a and score_b must $\in$ [0, 1]. 0.5 in case of a draw.
+  3. outcome: Outcome of a match. (int)
+- outcome must $\in$ {0, 1, 2} where,
+  - outcome = 0 $\implies$ Match is drawn
+  - outcome = 1 $\implies$ Player A won the match
+  - outcome = 2 $\implies$ Player B won the match
 - It returns the new ratings of the players in the form of tuple/array of float point numbers. e.g. (1400.0, 1550.0)
 - It must be called after a match with the required parameters to get the new ratings of the players.
 
 #### elo_with_points() method
 
+- This is the rating update formula which takes into consideration the individual points scored by the players.
 - It takes 5 arguments:
   1. rating_a: Current rating of player A. (float)
   2. rating_b: Current rating of player B. (float)
   3. points_a: Points scored by player A. (float)
   4. points_b: Points scored by player B. (float)
-  5. use_l_factor: Whether to use $L$ factor for consideration of points or replace $S_a$ with the fraction of points. (boolean, default true)
+  5. method: Method to use for consideration of points scored. (int, default 2)
+- method must $\in$ {0, 1, 2} where,
+  - method = 0 $\implies$ Just consider the outcome of a match.
+  - method = 1 $\implies$ Consider fraction of points at the place of $S_a$.
+  - method = 2 $\implies$ Uses the L factor for consideration of points.
 - It returns the new ratings of the players in the form of tuple/array of float point numbers. e.g. (1400.0, 1550.0)
 - It must be called after a match with the required parameters to get the new ratings of the players.
 
