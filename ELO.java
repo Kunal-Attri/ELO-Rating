@@ -57,9 +57,9 @@ public class ELO {
     public double[] elo(double rating_a, double rating_b, int outcome) {
         if (outcome == ELO.DRAW) {
             return this.elo_scores(rating_a, rating_b, 0.5, 0.5);
-        } else if (outcome == ELO.DRAW) {
+        } else if (outcome == ELO.PLAYER_A_WON) {
             return this.elo_scores(rating_a, rating_b, 1, 0);
-        } else if (outcome == ELO.DRAW) {
+        } else if (outcome == ELO.PLAYER_B_WON) {
             return this.elo_scores(rating_a, rating_b, 0, 1);
         } else {
             // Invalid Outcome given
