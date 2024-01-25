@@ -8,7 +8,12 @@ public class ELO {
     private static final int DEFAULT_C_VALUE = 400;
     private final int L_FACTOR;
     private static final int DEFAULT_L_FACTOR = 16;
-    private static final boolean DEFAULT_USE_L_FACTOR = true;
+    private static final int DEFAULT_METHOD = 2;
+    
+    // Outcomes
+    public static final int DRAW = 0;
+    public static final int PLAYER_A_WON = 1;
+    public static final int PLAYER_B_WON = 2;
 
     /**
      * Constructor with all default values
@@ -46,11 +51,31 @@ public class ELO {
     /**
      * @param rating_a Current rating of player A
      * @param rating_b Current rating of player B
+     * @param outcome Outcome of the match
+     * @return New ratings of the two players
+     */
+    public double[] elo(double rating_a, double rating_b, int outcome) {
+        if (outcome == ELO.DRAW) {
+            return this.elo_scores(rating_a, rating_b, 0.5, 0.5);
+        } else if (outcome == ELO.DRAW) {
+            return this.elo_scores(rating_a, rating_b, 1, 0);
+        } else if (outcome == ELO.DRAW) {
+            return this.elo_scores(rating_a, rating_b, 0, 1);
+        } else {
+            // Invalid Outcome given
+            System.out.println("Invalid outcome given. Refer deocumentation on github for more details.");
+            return new double[] {rating_a, rating_b};
+        }
+    }
+
+    /**
+     * @param rating_a Current rating of player A
+     * @param rating_b Current rating of player B
      * @param score_a Outcome of game for player A
      * @param score_b Outcome of game for player B
      * @return New ratings of the two players
      */
-    public double[] elo(double rating_a, double rating_b, double score_a, double score_b) {
+    private double[] elo_scores(double rating_a, double rating_b, double score_a, double score_b) {
 
         // Check if scores and valid
         if  (!valid_scores(score_a, score_b)) {
@@ -75,15 +100,26 @@ public class ELO {
      * @param rating_b Current rating of player B
      * @param points_a Points scored by player A
      * @param points_b Points scored by player B
-     * @param use_l_factor Whether to rationalize points or use L factor
+     * @param method Whether to rationalize points or use L factor
      * @return New ratings of the two players
      */
-    public double[] elo_with_points(double rating_a, double rating_b, double points_a, double points_b, boolean use_l_factor) {
-        if (!use_l_factor) {
+    public double[] elo_with_points(double rating_a, double rating_b, double points_a, double points_b, int method) {
+        if (method == 0) {
+            return this.elo_outcome_points(rating_a, rating_b, points_a, points_b);
+        } else if (method == 1) {
             return this.elo_rationalize_points(rating_a, rating_b, points_a, points_b);
-        } else {
+        } else if (method == 2) {
             return this.elo_with_l_factor(rating_a, rating_b, points_a, points_b);
+        } else {
+            // Invalid method given
+            System.out.println("Invalid method given");
+            return new double[] {rating_a, rating_b};
         }
+    }
+
+    private double[] elo_outcome_points(double rating_a, double rating_b, double points_a, double points_b) {
+        double[] scores = this.get_scores(points_a, points_b);
+        return this.elo_scores(rating_a, rating_b, scores[0], scores[1]);
     }
 
     /**
@@ -106,7 +142,7 @@ public class ELO {
             score_b = points_b / (points_a + points_b);
         }
 
-        return this.elo(rating_a, rating_b, score_a, score_b);
+        return this.elo_scores(rating_a, rating_b, score_a, score_b);
     }
 
     /**
@@ -117,31 +153,20 @@ public class ELO {
      * @return New ratings of the two players
      */
     private double[] elo_with_l_factor (double rating_a, double rating_b, double points_a, double points_b) {
-        double score_a, score_b;
-
-        if (points_a == points_b) {
-            // Draw match
-            score_a = 0.5;
-            score_b = 0.5;
-        } else if (points_a > points_b) {
-            // Player A won
-            score_a = 1;
-            score_b = 0;
-        } else {
-            // Player B won
-            score_a = 0;
-            score_b = 1;
-        }
-
-        // Calculating new ratings based on outcome
-        double[] new_ratings = this.elo(rating_a, rating_b, score_a, score_b);
-        double new_rating_a = new_ratings[0];
-        double new_rating_b = new_ratings[1];
+        // Get actual scores
+        double[] scores = this.get_scores(points_a, points_b);
+        double score_a = scores[0];
+        double score_b = scores[1];
 
         // Get expected scores
         double[] expected_scores = this.get_expected_scores(rating_a, rating_b);
         double expected_a = expected_scores[0];
         double expected_b = expected_scores[1];
+
+        // Calculating new ratings based on outcome
+        double[] new_ratings = this.elo_scores(rating_a, rating_b, score_a, score_b);
+        double new_rating_a = new_ratings[0];
+        double new_rating_b = new_ratings[1];
 
         // Calculating p value
         double p_a = this.p(score_a, expected_a);
@@ -214,98 +239,54 @@ public class ELO {
      * @return fraction of points
      */
     private double points_fraction (double points_a, double points_b) {
-        if (points_a == points_b) {
+        if (points_a == points_b && points_a == 0) {
             return 0;
         }
         return points_a / (points_a + points_b);
     }
 
+    private double[] get_scores(double points_a, double points_b) {
+        if (points_a == points_b) {
+            return new double[] {0.5, 0.5};
+        } else if (points_a > points_b) {
+            return new double[] {1, 0};
+        } else {
+            return new double[] {0, 1};
+        }
+    }
+
     // Overloading functions
-    public double[] elo(long rating_a, long rating_b, long score_a, long score_b) {
-        return elo((double) rating_a, (double) rating_b, (double) score_a, (double) score_b);
+    public double[] elo(long rating_a, long rating_b, int outcome) {
+        return elo((double) rating_a, (double) rating_b, outcome);
     }
 
-    public double[] elo(long rating_a, long rating_b, double score_a, long score_b) {
-        return elo((double) rating_a, (double) rating_b, score_a, (double) score_b);
-    }
-
-    public double[] elo(long rating_a, long rating_b, long score_a, double score_b) {
-        return elo((double) rating_a, (double) rating_b, (double) score_a, score_b);
-    }
-
-    public double[] elo(long rating_a, long rating_b, double score_a, double score_b) {
-        return elo((double) rating_a, (double) rating_b, score_a, score_b);
-    }
-
-    public double[] elo(double rating_a, double rating_b, long score_a, long score_b) {
-        return elo(rating_a, rating_b, (double) score_a, (double) score_b);
-    }
-
-    public double[] elo(double rating_a, double rating_b, double score_a, long score_b) {
-        return elo(rating_a, rating_b, score_a, (double) score_b);
-    }
-
-    public double[] elo(double rating_a, double rating_b, long score_a, double score_b) {
-        return elo(rating_a, rating_b, (double) score_a, score_b);
-    }
-
+    // ratings double
     public double[] elo_with_points(double rating_a, double rating_b, double points_a, double points_b) {
-        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_METHOD);
     }
 
-    public double[] elo_with_points(long rating_a, long rating_b, long points_a, long points_b, boolean use_l_factor) {
-        return elo_with_points((double) rating_a, (double) rating_b, (double) points_a, (double) points_b, use_l_factor);
-    }
-
-    public double[] elo_with_points(long rating_a, long rating_b, long points_a, long points_b) {
-        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
-    }
-
-    public double[] elo_with_points(long rating_a, long rating_b, double points_a, long points_b, boolean use_l_factor) {
-        return elo_with_points((double) rating_a, (double) rating_b, points_a, (double) points_b, use_l_factor);
-    }
-
-    public double[] elo_with_points(long rating_a, long rating_b, double points_a, long points_b) {
-        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
-    }
-
-    public double[] elo_with_points(long rating_a, long rating_b, long points_a, double points_b, boolean use_l_factor) {
-        return elo_with_points((double) rating_a, (double) rating_b, (double) points_a, points_b, use_l_factor);
-    }
-
-    public double[] elo_with_points(long rating_a, long rating_b, long points_a, double points_b) {
-        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
-    }
-
-    public double[] elo_with_points(long rating_a, long rating_b, double points_a, double points_b, boolean use_l_factor) {
-        return elo_with_points((double) rating_a, (double) rating_b, points_a, points_b, use_l_factor);
-    }
-
-    public double[] elo_with_points(long rating_a, long rating_b, double points_a, double points_b) {
-        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
-    }
-
-    public double[] elo_with_points(double rating_a, double rating_b, long points_a, long points_b, boolean use_l_factor) {
-        return elo_with_points(rating_a, rating_b, (double) points_a, (double) points_b, use_l_factor);
+    public double[] elo_with_points(double rating_a, double rating_b, long points_a, long points_b, int method) {
+        return elo_with_points(rating_a, rating_b, (double) points_a, (double) points_b, method);
     }
 
     public double[] elo_with_points(double rating_a, double rating_b, long points_a, long points_b) {
-        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_METHOD);
     }
 
-    public double[] elo_with_points(double rating_a, double rating_b, double points_a, long points_b, boolean use_l_factor) {
-        return elo_with_points(rating_a, rating_b, points_a, (double) points_b, use_l_factor);
+    // ratings long
+    public double[] elo_with_points(long rating_a, long rating_b, long points_a, long points_b, int method) {
+        return elo_with_points((double) rating_a, (double) rating_b, (double) points_a, (double) points_b, method);
     }
 
-    public double[] elo_with_points(double rating_a, double rating_b, double points_a, long points_b) {
-        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    public double[] elo_with_points(long rating_a, long rating_b, long points_a, long points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_METHOD);
     }
 
-    public double[] elo_with_points(double rating_a, double rating_b, long points_a, double points_b, boolean use_l_factor) {
-        return elo_with_points(rating_a, rating_b, (double) points_a, points_b, use_l_factor);
+    public double[] elo_with_points(long rating_a, long rating_b, double points_a, double points_b, int method) {
+        return elo_with_points((double) rating_a, (double) rating_b, points_a, points_b, method);
     }
 
-    public double[] elo_with_points(double rating_a, double rating_b, long points_a, double points_b) {
-        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    public double[] elo_with_points(long rating_a, long rating_b, double points_a, double points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_METHOD);
     }
 }
