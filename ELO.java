@@ -8,6 +8,7 @@ public class ELO {
     private static final int DEFAULT_C_VALUE = 400;
     private final int L_FACTOR;
     private static final int DEFAULT_L_FACTOR = 16;
+    private static final boolean DEFAULT_USE_L_FACTOR = true;
 
     /**
      * Constructor with all default values
@@ -159,8 +160,8 @@ public class ELO {
      * @return whether the scores are valid
      */
     private boolean valid_scores(double score_a, double score_b) {
-        return (0 <= score_a && score_a <= 1 &&
-                0 <= score_b && score_b <= 1 &&
+        return (0.0 <= score_a && score_a <= 1.0 &&
+                0.0 <= score_b && score_b <= 1.0 &&
                 score_a + score_b < 1.1);
     }
 
@@ -217,5 +218,94 @@ public class ELO {
             return 0;
         }
         return points_a / (points_a + points_b);
+    }
+
+    // Overloading functions
+    public double[] elo(long rating_a, long rating_b, long score_a, long score_b) {
+        return elo((double) rating_a, (double) rating_b, (double) score_a, (double) score_b);
+    }
+
+    public double[] elo(long rating_a, long rating_b, double score_a, long score_b) {
+        return elo((double) rating_a, (double) rating_b, score_a, (double) score_b);
+    }
+
+    public double[] elo(long rating_a, long rating_b, long score_a, double score_b) {
+        return elo((double) rating_a, (double) rating_b, (double) score_a, score_b);
+    }
+
+    public double[] elo(long rating_a, long rating_b, double score_a, double score_b) {
+        return elo((double) rating_a, (double) rating_b, score_a, score_b);
+    }
+
+    public double[] elo(double rating_a, double rating_b, long score_a, long score_b) {
+        return elo(rating_a, rating_b, (double) score_a, (double) score_b);
+    }
+
+    public double[] elo(double rating_a, double rating_b, double score_a, long score_b) {
+        return elo(rating_a, rating_b, score_a, (double) score_b);
+    }
+
+    public double[] elo(double rating_a, double rating_b, long score_a, double score_b) {
+        return elo(rating_a, rating_b, (double) score_a, score_b);
+    }
+
+    public double[] elo_with_points(double rating_a, double rating_b, double points_a, double points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    }
+
+    public double[] elo_with_points(long rating_a, long rating_b, long points_a, long points_b, boolean use_l_factor) {
+        return elo_with_points((double) rating_a, (double) rating_b, (double) points_a, (double) points_b, use_l_factor);
+    }
+
+    public double[] elo_with_points(long rating_a, long rating_b, long points_a, long points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    }
+
+    public double[] elo_with_points(long rating_a, long rating_b, double points_a, long points_b, boolean use_l_factor) {
+        return elo_with_points((double) rating_a, (double) rating_b, points_a, (double) points_b, use_l_factor);
+    }
+
+    public double[] elo_with_points(long rating_a, long rating_b, double points_a, long points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    }
+
+    public double[] elo_with_points(long rating_a, long rating_b, long points_a, double points_b, boolean use_l_factor) {
+        return elo_with_points((double) rating_a, (double) rating_b, (double) points_a, points_b, use_l_factor);
+    }
+
+    public double[] elo_with_points(long rating_a, long rating_b, long points_a, double points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    }
+
+    public double[] elo_with_points(long rating_a, long rating_b, double points_a, double points_b, boolean use_l_factor) {
+        return elo_with_points((double) rating_a, (double) rating_b, points_a, points_b, use_l_factor);
+    }
+
+    public double[] elo_with_points(long rating_a, long rating_b, double points_a, double points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    }
+
+    public double[] elo_with_points(double rating_a, double rating_b, long points_a, long points_b, boolean use_l_factor) {
+        return elo_with_points(rating_a, rating_b, (double) points_a, (double) points_b, use_l_factor);
+    }
+
+    public double[] elo_with_points(double rating_a, double rating_b, long points_a, long points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    }
+
+    public double[] elo_with_points(double rating_a, double rating_b, double points_a, long points_b, boolean use_l_factor) {
+        return elo_with_points(rating_a, rating_b, points_a, (double) points_b, use_l_factor);
+    }
+
+    public double[] elo_with_points(double rating_a, double rating_b, double points_a, long points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
+    }
+
+    public double[] elo_with_points(double rating_a, double rating_b, long points_a, double points_b, boolean use_l_factor) {
+        return elo_with_points(rating_a, rating_b, (double) points_a, points_b, use_l_factor);
+    }
+
+    public double[] elo_with_points(double rating_a, double rating_b, long points_a, double points_b) {
+        return elo_with_points(rating_a, rating_b, points_a, points_b, DEFAULT_USE_L_FACTOR);
     }
 }
